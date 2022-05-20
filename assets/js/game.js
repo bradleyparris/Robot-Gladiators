@@ -17,10 +17,31 @@ var enemyAttack = 12;
 
 
 var fight = function(enemyName) {
-  
+
   // Prompt fight
   var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-  while(enemyHealth > 0) {
+
+  while(playerHealth > 0 && enemyHealth > 0) {
+
+    // If Player chooses to Skip
+    if (promptFight === "skip" || promptFight === "SKIP") {
+
+      // Confirm Player wants to Skip
+      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+      // If yes, leave fight and penalize 10 money
+      if (confirmSkip) {
+        window.alert(playerName + " has chosen to skip the fight!");
+        playerMoney = playerMoney - 10;
+        console.log("playerMoney", playerMoney);
+        break;
+      }
+
+      // If no, ask question again by running fight() again
+      else {
+        fight(enemyName);
+      }
+    }
 
       // If Player chooses to Fight
       if (promptFight === "fight" || promptFight === "FIGHT") {
@@ -34,6 +55,7 @@ var fight = function(enemyName) {
         // Check enemy's health
         if (enemyHealth <= 0) {
           window.alert(enemyName + " has died!");
+          break;
         } 
         else {
           window.alert(enemyName + " still has " + enemyHealth + " health left.");
@@ -48,27 +70,10 @@ var fight = function(enemyName) {
         // Check player's health
         if (playerHealth <= 0) {
           window.alert(playerName + " has died!");
+          break;
         } 
         else {
           window.alert(playerName + " still has " + playerHealth + " health left.");
-        }
-      }
-
-      // If Player chooses to Skip
-      else if (promptFight === "skip" || promptFight === "SKIP") {
-
-        // Confirm Player wants to Skip
-        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-        // If yes, leave fight and penalize 10 money
-        if (confirmSkip) {
-          window.alert(playerName + " has chosen to skip the fight!");
-          playerMoney = playerMoney - 2;
-        }
-
-        // If no, ask question again by running fight() again
-        else {
-          fight();
         }
       }
 
